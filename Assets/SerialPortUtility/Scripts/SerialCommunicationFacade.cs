@@ -15,6 +15,16 @@ namespace Assets.SerialPortUtility.Scripts
             serialCom = new SerialCommunication(portName, baudrate);
             serialCom.SerialPortMessageEvent += SerialCom_SerialPortMessageEvent;
             serialCom.SerialPortSendMessageReportEvent += SerialCom_SerialPortSendMessageReportEvent;
+            try
+            {
+                serialCom.OpenSerialPort();
+                Debug.Log($"[SERIALE] Porta {portName} aperta.");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[SERIALE] Errore apertura porta {portName}: {ex.Message}");
+            }
+
         }
         public void Disconnect()
         {

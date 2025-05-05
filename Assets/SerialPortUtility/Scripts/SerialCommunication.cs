@@ -58,11 +58,10 @@ public class SerialCommunication
                 int count = serialPort.Read(buf, 0, bufferSize);
                 if (count > 0)
                 {
-                    if (SerialPortMessageEvent != null && SerialPortMessageEvent.GetInvocationList().Length > 0) // If somebody is listening
-                    {
-                        SerialPortMessageEvent.Invoke(buf);
-                    }
-
+                    Debug.Log("[SERIALE] Ricevuti byte: " + count);
+                    string testo = System.Text.Encoding.ASCII.GetString(buf, 0, count);
+                    Debug.Log("[SERIALE] Contenuto: " + testo);
+                    SerialPortMessageEvent?.Invoke(buf);
                 }
             }
             catch (System.Exception)
