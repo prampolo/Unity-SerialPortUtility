@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
 using UnityEngine;
@@ -26,15 +27,23 @@ public class SerialCommunication
     }
     public SerialCommunication(string portName, int boudrate)
     {
-        serialPort = new SerialPort(portName, boudrate);
+        serialPort = new SerialPort(portName, boudrate)
+        {
+            DtrEnable = true,
+            RtsEnable = true
+        };
 
     }
 
     public void OpenSerialPort()
     {
         serialPort.Open();
-        serialPort.ReadTimeout = 1;
+        UnityEngine.Debug.Log($"[SERIALE] Aperta {serialPort.PortName} a {serialPort.BaudRate} bps");
+        UnityEngine.Debug.Log($"[SERIALE] Bytes già presenti: {serialPort.BytesToRead}");
+        serialPort.ReadTimeout = 500;
+        serialPort.WriteTimeout = 500;
         threadReceive = new Thread(ListenSerialPort);
+        threadReceive.IsBackground = true;
         threadReceive.Start();
     }
     public bool IsSerialPortIsOpen()
@@ -48,25 +57,31 @@ public class SerialCommunication
 
     private void ListenSerialPort()
     {
-        while ((serialPort.IsOpen == true))
+        while ((serialPort.IsOpen))
         {
             try
             {
-                int bufferSize = serialPort.ReadBufferSize;
-                //										
-                byte[] buf = new byte[bufferSize];
-                int count = serialPort.Read(buf, 0, bufferSize);
-                if (count > 0)
+                int bytesToRead = serialPort.BytesToRead;
+                if (bytesToRead > 0)
                 {
-                    Debug.Log("[SERIALE] Ricevuti byte: " + count);
+                    byte[] buf = new byte[bytesToRead];
+                    int count = serialPort.Read(buf, 0, bytesToRead);
+                    UnityEngine.Debug.Log("[SERIALE] Ricevuti byte: " + count);
                     string testo = System.Text.Encoding.ASCII.GetString(buf, 0, count);
-                    Debug.Log("[SERIALE] Contenuto: " + testo);
+                    UnityEngine.Debug.Log("[SERIALE] Contenuto: " + testo);
                     SerialPortMessageEvent?.Invoke(buf);
                 }
+                else
+                {
+                    UnityEngine.Debug.Log("[SERIALE] Nessun byte disponibile in questo ciclo.");
+                }
+
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                UnityEngine.Debug.LogError("[SERIALE] Errore ricezione: " + ex.Message);
             }
+            Thread.Sleep(20);
         }
     }
 
