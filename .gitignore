@@ -1,4 +1,77 @@
-Library/
-ProjectSettings/
-Temp/
+# ========== UNITY ==========
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+Assets/AssetStoreTools*
+
+# Shader cache
+Assets/**/Shaders/Compiled/
+
+# Collaborate
+.collab/
+
+# Unity generated meta files
+sysinfo.txt
+
+# ========== USER/ENV SPECIFIC ==========
+*.swp
+*.swo
+*.sln*
+*.user
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.unityproj
+*.booproj
+*.svd
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# ========== VS/VSCODE ==========
 .vs/
+.vscode/
+*.code-workspace
+
+# VSCode specific
+.history/
+
+# ========== OS-SPECIFIC ==========
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ========== BUILD SYSTEM ==========
+*.apk
+*.aab
+*.app
+*.xcworkspace
+*.xcodeproj
+*.xcuserstate
+*.xcuserdatad
+*.gradle
+.gradle/
+.gradle-cache/
+
+# ========== PACKAGES & LOCKFILES ==========
+*.lock
+Packages/packages-lock.json
+
+# ========== CRASH & DEBUG ==========
+*.stacktrace
+*.dmp
+*.log
+*.bak
+*.tmp
+*.old
