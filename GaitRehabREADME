@@ -1,0 +1,7 @@
+## API Compatibility Level
+1. Edit > Project Settings.
+2. Select the Player category from the left sidebar.
+3. Expand the Other Settings section in the main panel.
+4. Scroll down to the Configuration subsection and locate API Compatibility Level.
+5. Change the selection from .NET Standard 2.0 (or .NET Standard 2.1) to .NET Framework (or .NET 4.x depending on your Unity version).
+6. Allow Unity to compile the project.
